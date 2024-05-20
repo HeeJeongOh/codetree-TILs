@@ -7,11 +7,11 @@ public class Main {
 
         StringBuffer result = new StringBuffer();
         StringBuffer tmp = new StringBuffer();
+        boolean reverse = true;
 
         for(String word : input){
             // System.out.println(word);
             int n = word.length();
-            boolean reverse = true;
             tmp = new StringBuffer("");
 
             for(int i = 0; i < n; i++){
@@ -30,6 +30,7 @@ public class Main {
                     result.append(">");
 
                     tmp = new StringBuffer();
+                    reverse = true;
                 }
                 else{
                     tmp.append(letter);
