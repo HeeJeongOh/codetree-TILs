@@ -35,9 +35,13 @@ public class Main {
                     tmp.append(letter);
                 }
             }
-            result.append(tmp + " ");
+            if(reverse){
+                result.append(tmp.reverse() + " ");
+            }
+            else{
+                result.append(tmp + " ");
+            }
         }
         System.out.println(result);
-        
     }    
 }
