@@ -2,6 +2,8 @@ import java.util.*;
 /*
 같은 글자끼리 쌍을 지었을 때, 위쪽으로 아치형 곡선
 - 선이 겹치지 않고, 모두가 짝지어진 경우
+
+괄호 문제랑 같음 !!
 */
 public class Main {
     public static void main(String[] args) {
@@ -15,42 +17,23 @@ public class Main {
             String[] input = sc.nextLine().split("");
             int len = input.length;
 
-            boolean[] visited = new boolean[len];
-            int cnt = 0;
-            boolean flag = true;
-
-            ArrayList<Integer> starts = new ArrayList<>();
-            ArrayList<Integer> ends = new ArrayList<>();
-
+            Deque<String> stack = new ArrayDeque<>();
             for(int i = 0; i < len; i++){
-                String start = input[i];
-                visited[i] = true;
-                starts.add(i);
-
-                for(int j = len-1; 0 <= j; j--){
-                    String end = input[j];
-                    if(start.equals(end) && visited[j] == false){
-                        int min = starts.get(starts.size()-1);
-                        if((ends.size() > 0) && (i < min && j < ends.get(ends.size()-1)) || (min < i && ends.get(ends.size()-1) < j)){
-                            flag = false;
-                        }
-                        else{
-                            ends.add(j);
-                            visited[j] = true;
-                            cnt += 1;
-                        }            
-                        break;
+                // System.out.println(stack);
+                if(stack.size() > 0){
+                    if(stack.getLast().equals(input[i])){
+                        stack.pollLast();
+                    }
+                    else{
+                        stack.add(input[i]);
                     }
                 }
-                if(flag == false){
-                    break;
+                else{
+                    stack.add(input[i]);
                 }
             }
-            if(flag == true && cnt == (int)(len/2)){
-                answer += 1;
-            }
-            System.out.println(Arrays.toString(input) + " " + answer);
-
+            if(stack.size() == 0) { answer += 1; }
+            // System.out.println(Arrays.toString(input) + " " + stack);
         }
         System.out.println(answer);
     }
