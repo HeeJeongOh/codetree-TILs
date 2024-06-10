@@ -10,12 +10,12 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         
-        int[] xs = new int[n];
-        int[] ys = new int[n];
+        double[] xs = new double[n];
+        double[] ys = new double[n];
 
         for(int i = 0; i < n; i++){
-            int x = sc.nextInt();
-            int y = sc.nextInt();
+            double x = sc.nextInt();
+            double y = sc.nextInt();
             
             xs[i] = x;
             ys[i] = y;
@@ -25,8 +25,8 @@ public class Main {
         Arrays.sort(ys);
 
         // 중앙값 계산
-        int xMedian = xs[n / 2];
-        int yMedian = ys[n / 2];
+        double xMedian = xs[n / 2];
+        double yMedian = ys[n / 2];
 
         // 요소가 짝수 개일 경우, 두 중앙값의 평균 계산
         if (n % 2 == 0) {
@@ -38,12 +38,12 @@ public class Main {
         // System.out.println("Y 좌표들의 중앙값: " + yMedian);
 
         // 거리 합 계산
-        int totalDistance = 0; 
+        double totalDistance = 0; 
 
         for(int i = 0; i < n; i++){
             totalDistance += Math.abs(xMedian - xs[i]) + Math.abs(yMedian - ys[i]);
         }
 
-        System.out.println(totalDistance);
+        System.out.println((int)totalDistance);
     }
 }
