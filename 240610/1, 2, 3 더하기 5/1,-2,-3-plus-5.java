@@ -2,17 +2,12 @@ import java.util.*;
 /*
 - 경우의 수를 사전순으로 정렬
 - 순서가 달라도 다른 경우의 수
+0 []
+1 [1]
+2 [11, 2] 
+3 [111, 21, 12, 3]
+4 [1111, 211, 121, 31, 112, 22, 13]
 
-유형 - 백트래킹
-1.  1 1 1 1 1 (o)
-    
-    1 1 1 2 0 (o)
-
-    1 1 1 0 0
-          1 0 (o)
-    
-    1 2 0 0 0
-    1 2 1 0 0
 */
 public class Main {
     public static void main(String[] args) {
@@ -50,18 +45,20 @@ public class Main {
         
         for (int i = 1; i <= n; i++) {
             dp[i] = new ArrayList<>();
+
+            // 1 모자란 값들에 대해 1 추가
             if (i >= 1) {
                 for (String expr : dp[i - 1]) {
                     dp[i].add(expr + "1");
                 }
             }
-
+            // 2 모자란 값들에 대해 2 추가 
             if (i >= 2) {
                 for (String expr : dp[i - 2]) {
                     dp[i].add(expr + "2");
                 }
             }
-
+            // 3 모자란 값들에 대해 3 추가
             if (i >= 3) {
                 for (String expr : dp[i - 3]) {
                     dp[i].add(expr + "3");
