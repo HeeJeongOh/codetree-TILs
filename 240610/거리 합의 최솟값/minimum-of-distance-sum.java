@@ -44,6 +44,6 @@ public class Main {
             totalDistance += Math.abs(xMedian - xs[i]) + Math.abs(yMedian - ys[i]);
         }
 
-        // System.out.println("총 거리 합: " + totalDistance);
+        System.out.println(totalDistance);
     }
 }
