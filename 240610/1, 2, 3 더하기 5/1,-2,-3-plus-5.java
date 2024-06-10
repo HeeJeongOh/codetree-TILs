@@ -24,7 +24,7 @@ public class Main {
         String answer = "";
         ArrayList<String> expressions = findAllExpressions(n);
         Collections.sort(expressions);
-        
+
         for (String expression : expressions) {
             k -= 1;
             if(k == 0){
@@ -32,12 +32,15 @@ public class Main {
                 break;
             }
         }
-
-        int i;
-        for(i = 0; i < answer.length()-1; i++){
-            System.out.print(answer.charAt(i)+ "+");
+        if(answer == ""){
+            System.out.println(-1);
+        }else{
+            int i;
+            for(i = 0; i < answer.length()-1; i++){
+                System.out.print(answer.charAt(i)+ "+");
+            }
+            System.out.print(answer.charAt(i));
         }
-        System.out.print(answer.charAt(i));
     }
     
     public static ArrayList<String> findAllExpressions(int n) {
@@ -64,7 +67,7 @@ public class Main {
                     dp[i].add(expr + "3");
                 }
             }
-            // System.out.println(i + " " + dp[i]);
+            //System.out.println(i + " " + dp[i]);
         }
         return dp[n];
     }
