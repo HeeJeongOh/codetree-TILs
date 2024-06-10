@@ -1,4 +1,5 @@
 import java.util.*;
+
 /*
 검색 : 평균값이 아닌 중앙값 찾기
 */
@@ -12,7 +13,6 @@ public class Main {
         int[] xs = new int[n];
         int[] ys = new int[n];
 
-        int xsum = 0, ysum = 0;
         for(int i = 0; i < n; i++){
             int x = sc.nextInt();
             int y = sc.nextInt();
@@ -24,26 +24,26 @@ public class Main {
         Arrays.sort(xs);
         Arrays.sort(ys);
 
-        int x1 = xs[(int)Math.floor(n/2)];
-        int y1 = ys[(int)Math.floor(n/2)];
+        // 중앙값 계산
+        int xMedian = xs[n / 2];
+        int yMedian = ys[n / 2];
 
-        if(n % 2 == 0){
-            x1 = (int) (xs[(int)Math.floor(n-1/2)] + x1) / 2;
-            y1 = (int) (ys[(int)Math.floor(n-1/2)] + y1) / 2;
+        // 요소가 짝수 개일 경우, 두 중앙값의 평균 계산
+        if (n % 2 == 0) {
+            xMedian = (xs[n / 2 - 1] + xs[n / 2]) / 2;
+            yMedian = (ys[n / 2 - 1] + ys[n / 2]) / 2;
         }
 
-        // System.out.println(Arrays.toString(xs) + " " + x1);
-        // System.out.println(Arrays.toString(ys) + " " + y1);
+        // System.out.println("X 좌표들의 중앙값: " + xMedian);
+        // System.out.println("Y 좌표들의 중앙값: " + yMedian);
 
-        int total = 0; 
+        // 거리 합 계산
+        int totalDistance = 0; 
 
         for(int i = 0; i < n; i++){
-            int x2 = xs[i];
-            int y2 = ys[i];
-
-            total += Math.abs(x1-x2) + Math.abs(y1-y2);
+            totalDistance += Math.abs(xMedian - xs[i]) + Math.abs(yMedian - ys[i]);
         }
 
-        System.out.println(total);
+        // System.out.println("총 거리 합: " + totalDistance);
     }
 }
