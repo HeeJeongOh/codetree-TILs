@@ -28,8 +28,8 @@ public class Main {
         int y1 = ys[(int)Math.floor(n/2)];
 
         if(n % 2 == 0){
-            x1 = (xs[(int)Math.floor(n-1/2)] + x1) / 2;
-            y1 = (ys[(int)Math.floor(n-1/2)] + y1) / 2;
+            x1 = (int) (xs[(int)Math.floor(n-1/2)] + x1) / 2;
+            y1 = (int) (ys[(int)Math.floor(n-1/2)] + y1) / 2;
         }
 
         // System.out.println(Arrays.toString(xs) + " " + x1);
