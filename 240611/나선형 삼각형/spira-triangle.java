@@ -13,7 +13,7 @@ public class Main {
 
         int n = sc.nextInt();
 
-        int[] dp = new int[n+1];
+        long[] dp = new long[n+1];
         
         dp[1] = 1;
         dp[2] = 1;
