@@ -50,7 +50,13 @@ public class Main {
                 first.addAll(students.get(key));
             }
 
-            if(((end[0] <= current[0] && end[1] <= current[1])&& (current[0] <= pass[0] && current[1] <= pass[1]))
+            // end - pass 사이에 존재하는 시간 조건
+            // 12:01 18:34
+            // hh: 12 
+            // hh: 13 ~ 17
+            // hh: 18
+            if((end[0] == current[0] && end[1] <= current[1])
+            || (current[0] == pass[0] && current[1] <= pass[1])
             || (end[0] < current[0] && current[0] < pass[0])){
                 second.addAll(students.get(key));
             }
