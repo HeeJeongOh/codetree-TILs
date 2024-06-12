@@ -46,15 +46,16 @@ public class Main {
         for (String key : students.keySet()) {
             int[] current = Arrays.stream(key.split(":")).mapToInt(Integer:: parseInt).toArray();
 
-            // 8:00 이후 11:22 이전 제외 
+            // 8:00 이후 11:00 이전 제외 
             if(start[0] < current[0] && current[0] < end[0]) { continue; }
-            // 18:33 이후 제외
+            // 19:00 이후 제외
             if(pass[0] < current[0]) { continue; }
             
             // System.out.println(key + " " + students.get(key));
 
             // 6:23, 8:00
-            if(current[0] <= start[0] && current[1] <= start[1]){
+            if((current[0] == start[0] && current[1] <= start[1])
+            || (current[0] < start[0])){
                 first.addAll(students.get(key));
             }
 
