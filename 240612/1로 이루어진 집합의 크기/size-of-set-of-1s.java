@@ -72,7 +72,7 @@ public class Main {
                 current += 1;                
             }
         }
-        
+
         // System.out.println(group);
         // for(int a = 0; a < n; a++){
         //     for(int b = 0; b < m; b++){
@@ -82,35 +82,39 @@ public class Main {
         // }            
         // System.out.println();
 
+        if(group.size() == 1){
+            System.out.println(group.get(2)+1);
+        }
+        else{
+            // 2. 탐색
+            long max_area = 0;
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < m; j++){        
+                    if(table[i][j] == 0){
+                        Set<Integer> group_cnt = new HashSet<>();
 
-        // 2. 탐색
-        int max_area = 0;
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){        
-                if(table[i][j] == 0){
-                    Set<Integer> group_cnt = new HashSet<>();
+                        for(int d = 0; d < 4; d++){
+                            int i2 = i + dy[d];
+                            int j2 = j + dx[d];
 
-                    for(int d = 0; d < 4; d++){
-                        int i2 = i + dy[d];
-                        int j2 = j + dx[d];
-
-                        if(0 <= i2 && i2 < n && 0 <= j2 && j2 < m
-                            && table[i2][j2] > 1){
-                                group_cnt.add(table[i2][j2]);
-                            }
-                    }
-                    // System.out.println(i+ " " + j + " " + group_cnt);
-
-                    if(group_cnt.size() > 1){
-                        int tmp = 0;
-                        for(int g : group_cnt){
-                            tmp += group.get(g);
+                            if(0 <= i2 && i2 < n && 0 <= j2 && j2 < m
+                                && table[i2][j2] > 1){
+                                    group_cnt.add(table[i2][j2]);
+                                }
                         }
-                        if(max_area < tmp){ max_area = tmp; }
+                        // System.out.println(i+ " " + j + " " + group_cnt);
+
+                        if(group_cnt.size() > 1){
+                            long tmp = 0;
+                            for(int g : group_cnt){
+                                tmp += group.get(g);
+                            }
+                            if(max_area < tmp){ max_area = tmp; }
+                        }
                     }
                 }
             }
+            System.out.println(max_area+1);
         }
-        System.out.println(max_area+1);
     }
 }
