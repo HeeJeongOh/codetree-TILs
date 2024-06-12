@@ -42,19 +42,23 @@ public class Main {
         Set<String> first = new HashSet<>();
         Set<String> second = new HashSet<>();
 
+        // 08:00 11:22 18:33
         for (String key : students.keySet()) {
-            // System.out.println(key + " " + students.get(key));
             int[] current = Arrays.stream(key.split(":")).mapToInt(Integer:: parseInt).toArray();
 
+            // 8:00 이후 11:22 이전 제외 
+            if(start[0] < current[0] && current[0] < end[0]) { continue; }
+            // 18:33 이후 제외
+            if(pass[0] < current[0]) { continue; }
+            
+            // System.out.println(key + " " + students.get(key));
+
+            // 6:23, 8:00
             if(current[0] <= start[0] && current[1] <= start[1]){
                 first.addAll(students.get(key));
             }
 
-            // end - pass 사이에 존재하는 시간 조건
-            // 12:01 18:34
-            // hh: 12 
-            // hh: 13 ~ 17
-            // hh: 18
+            // 11:23, 17:00, 18:32
             if((end[0] == current[0] && end[1] <= current[1])
             || (current[0] == pass[0] && current[1] <= pass[1])
             || (end[0] < current[0] && current[0] < pass[0])){
