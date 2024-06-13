@@ -15,7 +15,7 @@ public class Main {
 
         // System.out.println(s + " " + e + " " + q);
         
-        Map<String, ArrayList<String>> students = new TreeMap<>();
+        Map<Integer, ArrayList<String>> students = new TreeMap<>();
         for(int i = 0; i < n; i++){
             int time = Integer.parseInt(sc.next().replace(":", ""));
             String name = sc.next();
@@ -39,23 +39,22 @@ public class Main {
         Set<String> second = new HashSet<>();
 
         // 08:00 11:22 18:33
-        for (String key : students.keySet()) {
-            int current = Integer.parseInt(key.replace(":", ""));
+        for (int key : students.keySet()) {
             
             // 조건 1
-            if(current <= s){
+            if(key <= s){
                 first.addAll(students.get(key));
             }
             
             // 조건 2
-            if(e <= current && current <= p){
+            if(e <= key && key <= q){
                 second.addAll(students.get(key));
             }
 
         }        
 
-        System.out.println(first);
-        System.out.println(second);
+        // System.out.println(first);
+        // System.out.println(second);
         first.retainAll(second);
 
         // System.out.println(first);
