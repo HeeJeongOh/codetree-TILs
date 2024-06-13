@@ -28,23 +28,22 @@ public class Main {
         int k = nums.get(0);
         int idx = 0;
 
+        // for(int i = 0; i < 10; i++){
         while(nums.size() > 0){
-            // System.out.println(k + " " + nums);
-            for(idx = 0; idx < nums.size(); idx++){
-                if(nums.get(idx) == k){
-                    break;
-                }
-            }
-            if(idx < nums.size()){
-                nums.remove(idx);
-                k -= 1;
-            }
-            
-            if(k == 0 || idx == (nums.size() - 1)){
+            if(k == 0 || idx == nums.size()){
                 idx = 0;
-                // k 재설정
                 k = nums.get(0);
                 answer += 1;
+            }
+
+            // System.out.println(idx + " " + k + " " + nums);
+
+            for(idx = 0; idx < nums.size(); idx++){
+                if(nums.get(idx) == k){
+                    nums.remove(idx);
+                    k -= 1;
+                    break;
+                }
             }
         }
         System.out.println(answer);
