@@ -26,7 +26,7 @@ public class Main {
         int cnt = 0;
         ArrayList<Integer> answer = new ArrayList<>();
 
-        for(int i = 0; i < n-2; i++){
+        for(int i = 0; i < n; i++){
             int[] tmp = Arrays.copyOfRange(anums, i, i+m);
             Arrays.sort(tmp);
 
