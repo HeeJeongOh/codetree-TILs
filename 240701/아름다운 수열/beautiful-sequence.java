@@ -27,7 +27,7 @@ public class Main {
         ArrayList<Integer> answer = new ArrayList<>();
 
         for(int i = 0; i < n-2; i++){
-            int[] tmp = Arrays.copyOfRange(anums, i, i+3);
+            int[] tmp = Arrays.copyOfRange(anums, i, i+m);
             Arrays.sort(tmp);
 
             // System.out.println(Arrays.toString(bnums));
@@ -35,7 +35,7 @@ public class Main {
 
             int gap = bnums[0] - tmp[0];
             boolean flag = true;
-            for(int j = 0; j < 3; j++){
+            for(int j = 0; j < m; j++){
                 // System.out.println(bnums[j] + "-" + gap + " " + tmp[j]);
                 if((bnums[j]-gap) != tmp[j]){
                     flag = false;
