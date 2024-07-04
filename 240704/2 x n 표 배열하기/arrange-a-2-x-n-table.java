@@ -30,7 +30,7 @@ public class Main {
         dp[0][1] = 1;
         dp[0][2] = 1;
 
-        for(int i = 1; i <= n; i++){    
+        for(int i = 1; i < n; i++){    
             // System.out.println(Arrays.toString(dp[i-1]));
             dp[i][0] = dp[i-1][0] + dp[i-1][1] + dp[i-1][2];
             dp[i][1] = dp[i-1][0] + dp[i-1][2];
@@ -39,7 +39,7 @@ public class Main {
 
         // System.out.println(Arrays.toString(dp[n]));
 
-        long answer = dp[n][0] + dp[n][1] + dp[n][2];
+        long answer = dp[n-1][0] + dp[n-1][1] + dp[n-1][2];
         System.out.println(answer % 10007);
     }
 }
