@@ -19,10 +19,14 @@ public class Main {
 
             students[i] = new int[]{p, s};
         }
+
+        // 정렬 : 합이 작은 순서 - 합이 같다면 배송비가 적은 순서
         Arrays.sort(students, new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
-                return o1[0] == o2[0] ? o1[1] - o2[1] : o1[0] - o2[0];
+                int sum1 = o1[0] + o1[1];
+                int sum2 = o2[0] + o2[1];
+                return sum1 == sum2 ? o2[1] - o1[0] : sum1 - sum2;
             }
         });
         // for(int i = 0; i < n; i++){
