@@ -3,9 +3,10 @@ import java.util.*;
 - n개의 칸, ai부터 bi까지 각각 블럭을 1번 쌓기
 - 블럭의 개수 오름차순 정렬
 
-[시도1] 이중포문
-[시도2] 검색 - 카운트 정렬
-1. 값의 개수를 세어 다시 넣기
+[시도1] 시간초과 - 이중포문 + 내장 정렬
+[시도2] 시간초과 - 카운트 정렬
+[시도3] 통과 - 누적합 + 카운트정렬
+[시도4] 통과 - 누적합 + 내장 정렬
 */
 import java.util.*;
 
@@ -31,7 +32,6 @@ public class Main {
         // System.out.println(Arrays.toString(blocks));
         int[] cnt = Arrays.copyOfRange(blocks, 1, n+2);
         // System.out.println(Arrays.toString(cnt));
-
         Arrays.sort(cnt);
         System.out.println(cnt[(n+1)/2]);
 
