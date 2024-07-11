@@ -17,12 +17,12 @@ public class Main {
         int n = sc.nextInt();
         int k = sc.nextInt();
 
-        int[] blocks = new int[n+1];
+        int[] blocks = new int[n];
         for(int i = 0; i < k; i++){
             int a = sc.nextInt();
             int b = sc.nextInt();
             for(int j = a; j <= b; j++){
-                blocks[j] += 1;
+                blocks[j-1] += 1;
             }    
         }
         // Arrays.sort(blocks);
@@ -30,14 +30,14 @@ public class Main {
 
         // Count Sorting
         int[] cnt = new int[n+1];
-        for(int i = 1; i <= n; i++){
+        for(int i = 0; i < n; i++){
             cnt[blocks[i]] += 1;
         }
         // System.out.println(Arrays.toString(cnt));
         
         int idx = 0;
         int[] answer = new int[n+1];
-        for(int i = 0; i <= n; i++){
+        for(int i = 0; i < n; i++){
             for(int j = 0; j < cnt[i]; j++){
                 answer[idx] = i;
                 idx += 1;
