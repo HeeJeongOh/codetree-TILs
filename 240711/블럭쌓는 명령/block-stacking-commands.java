@@ -29,7 +29,7 @@ public class Main {
         // System.out.println(Arrays.toString(blocks));
 
         // Count Sorting
-        int[] cnt = new int[n+1];
+        int[] cnt = new int[k+1];
         for(int i = 0; i < n; i++){
             cnt[blocks[i]] += 1;
         }
