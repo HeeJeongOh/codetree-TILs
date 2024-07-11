@@ -20,12 +20,11 @@ public class Main {
             int b = sc.nextInt();
             for(int j = a; j <= b; j++){
                 blocks[j] += 1;
-            }
+            }    
         }
-        Arrays.sort(blocks);
-        // System.out.println(Arrays.toString(blocks));
     
-        System.out.println(blocks[n/2]);
+        Arrays.sort(blocks);
+        System.out.println(blocks[(n+1)/2]);
 
     }
 }
