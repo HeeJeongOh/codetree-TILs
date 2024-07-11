@@ -17,20 +17,24 @@ public class Main {
         int n = sc.nextInt();
         int k = sc.nextInt();
 
-        int[] blocks = new int[n];
+        int[] blocks = new int[n+2];
         for(int i = 0; i < k; i++){
             int a = sc.nextInt();
             int b = sc.nextInt();
-            for(int j = a; j <= b; j++){
-                blocks[j-1] += 1;
-            }    
+            blocks[a]++;
+            blocks[b+1]--;
+        }
+        // System.out.println(Arrays.toString(blocks));
+
+        for(int i = 1; i < n+2; i++){
+            blocks[i] += blocks[i-1];
         }
         // Arrays.sort(blocks);
         // System.out.println(Arrays.toString(blocks));
 
         // Count Sorting
         int[] cnt = new int[k+1];
-        for(int i = 0; i < n; i++){
+        for(int i = 1; i <= n; i++){
             cnt[blocks[i]] += 1;
         }
         // System.out.println(Arrays.toString(cnt));
