@@ -25,30 +25,15 @@ public class Main {
             blocks[b+1]--;
         }
         // System.out.println(Arrays.toString(blocks));
-
         for(int i = 1; i < n+2; i++){
             blocks[i] += blocks[i-1];
         }
-        // Arrays.sort(blocks);
         // System.out.println(Arrays.toString(blocks));
-
-        // Count Sorting
-        int[] cnt = new int[k+1];
-        for(int i = 1; i <= n; i++){
-            cnt[blocks[i]] += 1;
-        }
+        int[] cnt = Arrays.copyOfRange(blocks, 1, n+2);
         // System.out.println(Arrays.toString(cnt));
-        
-        int sum = 0;
-        for(int i = 0; i <= k; i++){
-            if(cnt[i] > 0){
-                sum += cnt[i];
-                if(sum > (n/2)){
-                    System.out.println(i);
-                    break;
-                }
-            }
-        }  
+
+        Arrays.sort(cnt);
+        System.out.println(cnt[(n+1)/2]);
 
     }
 }
