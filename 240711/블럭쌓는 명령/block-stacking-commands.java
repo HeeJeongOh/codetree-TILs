@@ -36,14 +36,12 @@ public class Main {
         // System.out.println(Arrays.toString(cnt));
         
         int idx = 0;
-        int[] answer = new int[n+1];
         for(int i = 0; i < n; i++){
-            for(int j = 0; j < cnt[i]; j++){
-                answer[idx] = i;
-                idx += 1;
+            idx += cnt[i];
+            if(idx > (int)(n/2)){
+                System.out.println(i);
+                break;
             }
         }
-        // System.out.println(Arrays.toString(answer));
-        System.out.println(answer[n/2]);
     }
 }
