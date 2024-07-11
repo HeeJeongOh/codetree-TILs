@@ -37,17 +37,20 @@ public class Main {
         
         int idx = 0;
         int[] answer = new int[n];
+        outer:
         for(int i = 0; i <= k; i++){
             if(cnt[i] > 0){
                 for(int j = 0; j < cnt[i]; j++){
                     answer[idx] = i;
                     idx += 1;
+                    if(idx > (int)(n/2)){
+                        System.out.println(i);
+                        break outer;
+                    }
                 }
             }
         }
-        // System.out.println(Arrays.toString(answer));
-        System.out.println(answer[n/2]);
-        
+        // System.out.println(Arrays.toString(answer));        
 
     }
 }
