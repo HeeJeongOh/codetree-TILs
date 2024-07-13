@@ -29,66 +29,73 @@ public class Main {
             map[r-1][c-1] = 1;
         }
 
-        int[] ady = {0, -1, 0, 1};
-        int[] adx = {1, 0, -1, 0};
 
 
-        int[] bdy = {0, 1, 0, -1};
-        int[] bdx = {-1, 0, 1, 0};
+        if(k == 0){
+            System.out.println(104);
+        }else{
 
-        Deque<int[]> astack = new ArrayDeque<>();
-        Deque<int[]> bstack = new ArrayDeque<>();
-
-        astack.add(new int[]{0, 0});
-        bstack.add(new int[]{4, 4});
-        
-        while(astack.size() > 0 && bstack.size() > 0){
-            int[] arc = astack.pollLast();
-            int ar1 = arc[0];
-            int ac1 = arc[1];
-            map[ar1][ac1] = 2;
-
-            int[] brc = bstack.pollLast();
-            int br1 = brc[0];
-            int bc1 = brc[1];
-            map[br1][bc1] = 3;
+            int[] ady = {0, -1, 0, 1};
+            int[] adx = {1, 0, -1, 0};
 
 
-            if(ar1 == br1 && ac1 == bc1){
-                break;
-            }
+            int[] bdy = {0, 1, 0, -1};
+            int[] bdx = {-1, 0, 1, 0};
 
-            for(int i = 0; i < 4; i++){
-                int ar2 = ar1 + ady[i];
-                int ac2 = ac1 + adx[i];
+            Deque<int[]> astack = new ArrayDeque<>();
+            Deque<int[]> bstack = new ArrayDeque<>();
 
-                if(0 <= ar2 && ar2 < 5 && 0 <= ac2 && ac2 < 5 && map[ar2][ac2] == 0){
-                    // map[ar2][ac2] = 2;
-                    astack.add(new int[]{ar2, ac2});
+            astack.add(new int[]{0, 0});
+            bstack.add(new int[]{4, 4});
+            
+            while(astack.size() > 0 && bstack.size() > 0){
+                int[] arc = astack.pollLast();
+                int ar1 = arc[0];
+                int ac1 = arc[1];
+                map[ar1][ac1] = 2;
+
+                int[] brc = bstack.pollLast();
+                int br1 = brc[0];
+                int bc1 = brc[1];
+                map[br1][bc1] = 3;
+
+
+                if(ar1 == br1 && ac1 == bc1){
                     break;
                 }
-            }
-            for(int i = 0; i < 4; i++){
-                int br2 = br1 + bdy[i];
-                int bc2 = bc1 + bdx[i];
 
-                if(0 <= br2 && br2 < 5 && 0 <= bc2 && bc2 < 5 && map[br2][bc2] == 0){
-                    bstack.add(new int[]{br2, bc2});
-                    break;
+                for(int i = 0; i < 4; i++){
+                    int ar2 = ar1 + ady[i];
+                    int ac2 = ac1 + adx[i];
+
+                    if(0 <= ar2 && ar2 < 5 && 0 <= ac2 && ac2 < 5 && map[ar2][ac2] == 0){
+                        // map[ar2][ac2] = 2;
+                        astack.add(new int[]{ar2, ac2});
+                        break;
+                    }
+                }
+                for(int i = 0; i < 4; i++){
+                    int br2 = br1 + bdy[i];
+                    int bc2 = bc1 + bdx[i];
+
+                    if(0 <= br2 && br2 < 5 && 0 <= bc2 && bc2 < 5 && map[br2][bc2] == 0){
+                        bstack.add(new int[]{br2, bc2});
+                        break;
+                    }
                 }
             }
-        }
 
 
-        int cnt = 0;
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 5; j++){
-                if(map[i][j] == 0){
-                    cnt += 1;
+            int cnt = 0;
+            for(int i = 0; i < 5; i++){
+                for(int j = 0; j < 5; j++){
+                    if(map[i][j] == 0){
+                        cnt += 1;
+                    }
                 }
             }
+            if(cnt == 1){ answer = 1;}
+            System.out.println(answer);
         }
-        if(cnt == 1){ answer = 1;}
-        System.out.println(answer);
     }
 }
