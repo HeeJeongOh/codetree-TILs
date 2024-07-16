@@ -51,10 +51,11 @@ public class Main {
         
         int offset = 0;
         if(min_num < 0){
-            offset = min_num;
+            offset = -min_num;
         }
+        // System.out.println(min_num + " " + max_num);
 
-        int L = max_num + offset + 2;
+        int L = max_num + offset + 5;
         int[][] S = new int[L][L];
 
         for(int i = 0; i < n; i++){
