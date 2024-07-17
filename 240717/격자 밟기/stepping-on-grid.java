@@ -20,9 +20,6 @@ public class Main {
     static int answer = 0;
 
     static void move(int[][] map, int[] aloc, int[] bloc, int left_space) {
-        // printMap(map);
-
-        // If both players meet and no cells are left
         if (aloc[0] == bloc[0] && aloc[1] == bloc[1] && left_space == 0) {
             answer += 1;
             return;
@@ -38,12 +35,16 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             int ar = aloc[0] + dy[i];
             int ac = aloc[1] + dx[i];
-            astack.add(new int[]{ar, ac});
+            if (0 <= ar && ar < 5 && 0 <= ac && ac < 5 && map[ar][ac] == 0) {
+                astack.add(new int[]{ar, ac});
+            }
         }
         for (int j = 0; j < 4; j++) {
             int br = bloc[0] + dy[j];
             int bc = bloc[1] + dx[j];
-            bstack.add(new int[]{br, bc});
+            if (0 <= br && br < 5 && 0 <= bc && bc < 5 && map[br][bc] == 0) {
+                bstack.add(new int[]{br, bc});
+            }
         }
 
         for(int[] arc : astack){
@@ -53,21 +54,20 @@ public class Main {
 
                 int br = brc[0];
                 int bc = brc[1];
-                if (0 <= ar && ar < 5 && 0 <= ac && ac < 5 && map[ar][ac] == 0) {
-                    if (0 <= br && br < 5 && 0 <= bc && bc < 5 && map[br][bc] == 0) {
-                        if(ar == br && ac == bc && left_space == 1){
-                            map[ar][ac] = 1;
-                            move(map, new int[]{ar, ac}, new int[]{br, bc}, left_space - 1);
-                            map[ar][ac] = 0;
-                        }
-                        else{
-                            map[ar][ac] = 1;
-                            map[br][bc] = 1;
-                            move(map, new int[]{ar, ac}, new int[]{br, bc}, left_space - 2);
-                            map[br][bc] = 0;
-                            map[ar][ac] = 0;
-                        }
-                    } 
+
+                if(ar == br && ac == bc){
+                    if(left_space == 1){
+                        map[ar][ac] = 1;
+                        move(map, new int[]{ar, ac}, new int[]{br, bc}, left_space - 1);
+                        map[ar][ac] = 0;
+                    }
+                }
+                else{
+                    map[ar][ac] = 1;
+                    map[br][bc] = 1;
+                    move(map, new int[]{ar, ac}, new int[]{br, bc}, left_space - 2);
+                    map[br][bc] = 0;
+                    map[ar][ac] = 0;
                 }
             }
         }
@@ -76,19 +76,18 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int k = sc.nextInt();  // Number of blocked cells
+        int k = sc.nextInt();
         int[][] map = new int[5][5];
 
         for (int i = 0; i < k; i++) {
             int r = sc.nextInt();
             int c = sc.nextInt();
-            map[r - 1][c - 1] = -1;  // Mark blocked cells
+            map[r - 1][c - 1] = -1;
         }
 
-        map[0][0] = 1;  // Mark starting point of A as visited
-        map[4][4] = 1;  // Mark starting point of B as visited
-        move(map, new int[]{0, 0}, new int[]{4, 4}, 25 - k - 2);  // Initial spaces left is 25 - blocked cells - 2 for starting points
-        
+        map[0][0] = 1;
+        map[4][4] = 1;
+        move(map, new int[]{0, 0}, new int[]{4, 4}, 25 - k - 2);
         System.out.println(answer);
     }
 }
