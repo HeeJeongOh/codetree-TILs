@@ -17,7 +17,7 @@ public class Main {
         BigInteger decimalValue = new BigInteger(binaryStr, 2);
         BigInteger mulValue = new BigInteger("17");
 
-        decimalValue.multiply(mulValue);
+        decimalValue = decimalValue.multiply(mulValue);
         // System.out.println("Decimal value: " + decimalValue);
 
         // // to binary
