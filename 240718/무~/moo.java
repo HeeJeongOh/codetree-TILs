@@ -28,17 +28,18 @@ public class Main {
         char answer = ' ';
 
         Scanner sc = new Scanner(System.in);
-
-        // 1. 15
-        // 2. 32
         int N = sc.nextInt();
         
+        // S(t) = S(t-1) + (t+3) + S(t-1)
         int t = 0;
+
+        // len : S(t)의 길이
         long len = length(t);
         while (len < N) {
             t++;
             len = length(t);
         }        
+
         while(true){
             if (t == 0) {
                 answer = "moo".charAt(N - 1);
@@ -50,14 +51,17 @@ public class Main {
             
             // System.out.println("t:"+ t + " N:" + N + " len:" + len + " left:"+ leftLength + " middle:" + middleLength);
 
+            // front - 앞쪽에 있기 때문에 뒷 부분 버리기
             if (N <= leftLength) {
                 len = leftLength;
                 t -= 1;
             } 
+            // middle - 첫 글자를 제외하고는 모두 o
             else if (N <= leftLength + middleLength) {
                 answer = (N - leftLength == 1) ? 'm' : 'o';
                 break;
             } 
+            // back - N을 앞쪽 범위 숫자로 바꾸고 뒷부분 버리기
             else {
                 N -= (leftLength + middleLength);
                 len = leftLength;
