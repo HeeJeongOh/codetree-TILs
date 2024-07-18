@@ -1,9 +1,23 @@
 import java.util.*;
 import java.math.BigInteger;
 /*
-input : 10001111110001000101000001000100111100110101100011000011011001111000100110110000110101110101100001001100010111000101000100010010011000000010010
+[시도1] int 활용 - 런타임에러 
+[시도2] long 활용 + for, while문으로 직접 변환 - 숫자 범위 초과
 
-Big Integer : lon
+< Big Integer >
+import java.math.BigInteger;
+BigInteger bigInt1 = new BigInteger("123456789123456789123456789123456789");
+BigInteger bigInt2 = new BigInteger("987654321987654321987654321987654321");
+
+// Arithmetic operations
+BigInteger sum = bigInt1.add(bigInt2);
+BigInteger difference = bigInt1.subtract(bigInt2);
+BigInteger product = bigInt1.multiply(bigInt2);
+BigInteger quotient = bigInt1.divide(bigInt2);
+BigInteger remainder = bigInt1.remainder(bigInt2);
+
+// Conversion to binary string
+String binaryString = bigInt1.toString(2);
 */
 
 public class Main {
@@ -23,6 +37,5 @@ public class Main {
         // // to binary
         String answer = decimalValue.toString(2);
         System.out.println(answer);
-
     }
 }
