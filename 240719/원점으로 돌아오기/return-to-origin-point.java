@@ -8,84 +8,80 @@ import java.util.*;
     (0, 0) : (0, 1) (2, 0)
     (0, 1) : (2, 1)
     (2, 1) : (2)
-3. 재귀로 구현해보기
+3. 재귀로 구현해보기(gpt 도움)
+    3.1 값의 비교를 위해 string으로 변환
+    3.2 
 */
+import java.util.*;
+
 public class Main {
-    // 클래스 전역변수
-    private static Map<int[], List<int[]>> graph;
+    private static Map<String, List<String>> graph;
     private static Set<String> visited;
     private static int pathCount;
 
-    // 현재 위치, 시작 위치, 방문한 점들, 남은 방문할 점 개수를 인자로 받습니다.
-    private static void dfs(int[] current, int[] start, Set<String> path, int remaining) {
-        // 현재 위치를 방문 처리합니다.
-        String key = Arrays.toString(current);
-
-        path.add(key);
-        visited.add(key);
+    // 현재 위치, 시작 위치, 남은 방문할 점 개수를 인자로 받습니다.
+    private static void dfs(int[] current, int remaining) {
+        // System.out.println(visited + " " + remaining + " " + Arrays.toString(current));
+        String currentKey = Arrays.toString(current);
+        visited.add(currentKey);
 
         // 모든 점을 방문하고 다시 시작점으로 돌아온 경우
-        if (remaining == 1 && Arrays.equals(current, start)) {
-            pathCount++;
+        if (remaining == 1 && (current[0] == 0 || current[1] == 0)) {
+            pathCount += 1;
         } else {
             // 이웃한 점들을 재귀적으로 방문합니다.
-            for (int[] neighbor : graph.get(current)) {
-                String neighborKey = Arrays.toString(neighbor);
+            for (String neighborKey : graph.get(currentKey)) {
                 if (!visited.contains(neighborKey)) {
-                    dfs(neighbor, start, path, remaining - 1);
+                    // [2, 3]
+                    String[] parts = neighborKey.replace("[", "").replace("]", "").split(", ");
+                    int[] neighbor = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])};
+
+                    dfs(neighbor, remaining - 1);
                 }
             }
         }
-        // 백트래킹: 현재 위치를 방문 처리에서 해제합니다.
-        path.remove(key);
-        visited.remove(key);
+        // 백트래킹: 현재 위치를 방문 처리에서 해제
+        visited.remove(currentKey);
     }
-    
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
-
-        int[][] points = new int[N+1][2];
 
         graph = new HashMap<>();
         visited = new HashSet<>();
         pathCount = 0;
 
-        for(int i = 0; i < N; i++){
+
+        // points 배열을 초기화, graph 초기화
+        int[][] points = new int[N + 1][2];
+        for (int i = 0; i < N; i++) {
             int x = sc.nextInt();
             int y = sc.nextInt();
             points[i] = new int[]{x, y};
-            graph.put(points[i], new ArrayList<>());
+            graph.put(Arrays.toString(points[i]), new ArrayList<>());
         }
 
-        points[N] = new int[]{0, 0};
-        graph.put(points[N], new ArrayList<>());
+        points[N] = new int[]{0, 0}; // 시작점(원점)
+        graph.put(Arrays.toString(points[N]), new ArrayList<>());
 
-        for(int[] key : graph.keySet()){
-
-            for(int i = 0; i < N+1; i++){
-                int[] xy = points[i];
-
-                if((key[0] == xy[0] && key[1] != xy[1]) || (key[0] != xy[0] && key[1] == xy[1])){
-                    // ArrayList<int[]> key_values = graph.get(key);
-                    // key_values.add(xy);
-                    // graph.put(key, key_values);   
-                    graph.get(key).add(xy);
-
+        // 그래프 구축
+        for (int i = 0; i < N + 1; i++) {
+            for (int j = 0; j < N + 1; j++) {
+                // 본인인 경우 제외
+                if (i != j) {
+                    int[] point1 = points[i];
+                    int[] point2 = points[j];
+                    if (point1[0] == point2[0] || point1[1] == point2[1]) {
+                        graph.get(Arrays.toString(point1)).add(Arrays.toString(point2));
+                    }
                 }
             }
-            System.out.print(Arrays.toString(key) + " : ");
-            for(int[] v : graph.get(key)){
-                System.out.print(Arrays.toString(v) + " ");
-            }             
-            System.out.println();
         }
 
-        // dfs
-        int[] cnt = new int[0];
-        int[] visited = new int[N+1];
-        dfs(points[N], points[N], new HashSet<>(), N + 1);
+        // 재귀적 DFS
+        dfs(points[N], N + 1);
 
-        System.println(cnt);
+        System.out.println(pathCount);
     }
 }
