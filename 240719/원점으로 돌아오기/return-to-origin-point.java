@@ -10,6 +10,8 @@ import java.util.*;
     (2, 1) : (2)
 3. 재귀로 구현해보기(gpt 도움)
     3.1 값의 비교를 위해 string으로 변환
+4. 토론 : 모든 점이 일직선 상 -> 해당 점을 방문한다면 반드시 방향을 바꾸어야한다(?)
+    4.1 이전 방향과 다른 방향으로만 이동
 */
 import java.util.*;
 
@@ -18,11 +20,26 @@ public class Main {
     private static Set<String> visited;
     private static int pathCount;
 
+    // 현재 점에서 이웃 점으로 이동할 때의 방향을 계산합니다.
+    // 이동방향 : 1(상), 2(하), 3(좌), 4(우)
+    private static int getDirection(int[] from, int[] to) {
+        if(from[0] == to[0] && from[1] < to[1]) { return 1; }
+        if(from[0] == to[0] && from[1] > to[1]) { return 2; }
+        if(from[0] > to[0] && from[1] == to[1]) { return 3; }
+        if(from[0] < to[0] && from[1] == to[1]) { return 4; }
+
+        return -1;
+    }
+
     // 현재 위치, 시작 위치, 남은 방문할 점 개수를 인자로 받습니다.
-    private static void dfs(int[] current, int[] start, int remaining) {
-        if (remaining == 0 && Arrays.equals(current, start)) {
-            pathCount += 1;
-            return;
+    private static void dfs(int[] current, int[] start, int remaining, int lastDirection) {
+        if (remaining == 1 && (current[0] == 0 || current[1] == 0)) {
+            int direction = getDirection(current, start);
+            if(direction != lastDirection){
+                // System.out.println(visited);
+                pathCount += 1;
+                return;
+            }
         }
 
         String currentKey = Arrays.toString(current);
@@ -30,14 +47,18 @@ public class Main {
         // 이웃한 점들을 재귀적으로 방문합니다.
         for (String neighborKey : graph.get(currentKey)) {
             if (!visited.contains(neighborKey)) {
-                visited.add(neighborKey);
-
                 String[] parts = neighborKey.replace("[", "").replace("]", "").split(", ");
                 int[] neighbor = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])};        
-                dfs(neighbor, start, remaining - 1);
                 
-                visited.remove(neighborKey); // 백트래킹: 방문 해제
+                // 방향 전환 조건 확인
+                int direction = getDirection(current, neighbor);
+                if (direction != lastDirection) {
+                    visited.add(neighborKey);
+                    dfs(neighbor, start, remaining - 1, direction);
+                    visited.remove(neighborKey); // 백트래킹: 방문 해제
+                }
             }
+        
         }
     }
 
@@ -48,7 +69,6 @@ public class Main {
         graph = new HashMap<>();
         visited = new HashSet<>();
         pathCount = 0;
-
 
         // points 배열을 초기화, graph 초기화
         int[][] points = new int[N + 1][2];
@@ -76,8 +96,13 @@ public class Main {
             }
         }
 
+        // for(String key : graph.keySet()){
+        //     System.out.println(key + " : " + graph.get(key));
+        // }
+
         // 재귀적 DFS
-        dfs(points[N], points[N], N + 1);
+        visited.add(Arrays.toString(points[N]));
+        dfs(points[N], points[N], N + 1, -1);
         System.out.println(pathCount);
     }
 }
