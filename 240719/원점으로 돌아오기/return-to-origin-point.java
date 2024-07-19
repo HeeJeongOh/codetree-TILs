@@ -10,7 +10,6 @@ import java.util.*;
     (2, 1) : (2)
 3. 재귀로 구현해보기(gpt 도움)
     3.1 값의 비교를 위해 string으로 변환
-    3.2 
 */
 import java.util.*;
 
@@ -20,28 +19,26 @@ public class Main {
     private static int pathCount;
 
     // 현재 위치, 시작 위치, 남은 방문할 점 개수를 인자로 받습니다.
-    private static void dfs(int[] current, int remaining) {
-        // System.out.println(visited + " " + remaining + " " + Arrays.toString(current));
-        String currentKey = Arrays.toString(current);
-        visited.add(currentKey);
-
-        // 모든 점을 방문하고 다시 시작점으로 돌아온 경우
-        if (remaining == 1 && (current[0] == 0 || current[1] == 0)) {
+    private static void dfs(int[] current, int[] start, int remaining) {
+        if (remaining == 0 && Arrays.equals(current, start)) {
             pathCount += 1;
-        } else {
-            // 이웃한 점들을 재귀적으로 방문합니다.
-            for (String neighborKey : graph.get(currentKey)) {
-                if (!visited.contains(neighborKey)) {
-                    // [2, 3]
-                    String[] parts = neighborKey.replace("[", "").replace("]", "").split(", ");
-                    int[] neighbor = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])};
+            return;
+        }
 
-                    dfs(neighbor, remaining - 1);
-                }
+        String currentKey = Arrays.toString(current);
+
+        // 이웃한 점들을 재귀적으로 방문합니다.
+        for (String neighborKey : graph.get(currentKey)) {
+            if (!visited.contains(neighborKey)) {
+                visited.add(neighborKey);
+
+                String[] parts = neighborKey.replace("[", "").replace("]", "").split(", ");
+                int[] neighbor = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])};        
+                dfs(neighbor, start, remaining - 1);
+                
+                visited.remove(neighborKey); // 백트래킹: 방문 해제
             }
         }
-        // 백트래킹: 현재 위치를 방문 처리에서 해제
-        visited.remove(currentKey);
     }
 
     public static void main(String[] args) {
@@ -80,8 +77,7 @@ public class Main {
         }
 
         // 재귀적 DFS
-        dfs(points[N], N + 1);
-
+        dfs(points[N], points[N], N + 1);
         System.out.println(pathCount);
     }
 }
