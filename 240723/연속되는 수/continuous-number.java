@@ -20,23 +20,25 @@ public class Main {
         int N = sc.nextInt();
 
         int[] numbers = new int[N];
-        Set<Integer> numset = new HashSet<>();
+        Set<Integer> numset = new TreeSet<>();
         for(int i = 0; i < N; i++){
             numbers[i] = sc.nextInt();
             numset.add(numbers[i]);
         }
+        // System.out.println(numset);
         // System.out.println(Arrays.toString(numbers));
 
         int answer = 0;
         for(int k : numset){
             int cnt = 1;
             int prenum = numbers[0];
-
+            // System.out.println("k : " + k);
             for(int i = 1; i < N; i++){
                 if(numbers[i] == k){
                     continue;
                 }
                 if(prenum != numbers[i]){
+                    // System.out.println("prenum : " + prenum + ", cnt : " + cnt);
                     if(answer < cnt) {
                         answer = cnt; 
                     }
@@ -47,7 +49,10 @@ public class Main {
                     cnt += 1;
                 }   
             }
-            // System.out.println("k : " + k + " / cnt : " + answer);
+            // System.out.println("prenum : " + prenum + ", cnt : " + cnt);
+            if(answer < cnt) {
+                answer = cnt; 
+            }
         }            
         System.out.println(answer);
     }
