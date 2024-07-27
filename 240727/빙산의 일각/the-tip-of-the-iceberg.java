@@ -8,6 +8,8 @@ import java.util.*;
 3. 같은 덩어리인지 파악하기 위해 flag 도입
     3.1 덩어리가 끊길 때 flag = false;
     3.2 flag == false && height[j] > line == 새로운 덩어리 시작
+
+4. 시간초과 -> 최댓점을 찍고 감소한다면 break;
 */
 public class Main {
     public static void main(String[] args) {
@@ -31,14 +33,18 @@ public class Main {
             int cnt = 0;
             boolean flag = false;
             for(int j = 0; j < N; j++){
-                if(heights[j] == 0 || heights[j] < line){
+                if(heights[j] < line){
                     flag = false;
-                    heights[j] = 0;
                 }
                 else if(flag == false && line <= heights[j]){
                     flag = true;                    
                     cnt += 1;
                 }
+                heights[j] -= 1;
+            }
+
+            if(cnt < max_cnt){
+                break;
             }
 
             // System.out.println(line + " " + cnt + " " + Arrays.toString(heights));
