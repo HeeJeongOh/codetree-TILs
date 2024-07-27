@@ -10,6 +10,7 @@ import java.util.*;
     3.2 flag == false && height[j] > line == 새로운 덩어리 시작
 
 4. 시간초과 -> 최댓점을 찍고 감소한다면 break;
+5. 해수면 그림상 네모 윗선이라고 생각
 */
 public class Main {
     public static void main(String[] args) {
@@ -29,25 +30,30 @@ public class Main {
         // System.out.println(max_height + " " + Arrays.toString(heights));
 
         int max_cnt = 0;
-        for(int line = 1; line <= max_height; line++){
+        for(int line = 1; line < max_height; line++){
+
             int cnt = 0;
             boolean flag = false;
+            // System.out.println(line + " " + Arrays.toString(heights));
+
             for(int j = 0; j < N; j++){
-                if(heights[j] < line){
+                // System.out.println(flag + " " + heights[j] + " " + cnt);
+                if(heights[j] <= line){
                     flag = false;
+                    heights[j] = 0;
+
                 }
-                else if(flag == false && line <= heights[j]){
+                else if(flag == false && line < heights[j]){
+                    // System.out.println("덩어리 시작 " + j);
+                    
                     flag = true;                    
                     cnt += 1;
                 }
-                heights[j] -= 1;
             }
 
-            if(cnt < max_cnt){
+            if(cnt <= max_cnt){
                 break;
             }
-
-            // System.out.println(line + " " + cnt + " " + Arrays.toString(heights));
 
             if(max_cnt < cnt){
                 max_cnt = cnt;
@@ -56,3 +62,7 @@ public class Main {
         System.out.println(max_cnt);
     }
 }
+/*
+1 1     1 1
+1 1 1 1 1 1
+*/
