@@ -19,7 +19,8 @@ import java.util.*;
     1 0 1 1
     1 1 0 1
     0 0 0 0
-
+[시도2]
+1. 좌측 상단에 시작해야함 (0, 0) 
 */
 public class Main {
 
@@ -78,13 +79,16 @@ public class Main {
         stack.add(new int[]{r, c});
 
         while(stack.size() > 0){
-            if(length == cnt){
-                return true;
-            }
             int[] rc = stack.pollLast();
             int r1 = rc[0];
             int c1 = rc[1];
-            
+            cnt += 1;
+
+            if(length == cnt){
+                return true;
+            }
+
+            // System.out.println(r1 + " " + c1 + " " + cnt);
             visited[r1][c1] = true;
 
             for (int i = 0; i < 4; i++) {
@@ -93,7 +97,6 @@ public class Main {
 
                 if (boarderCheck(r2, c2) && grid[r2][c2] == 2 && !visited[r2][c2]) {
                     stack.add(new int[]{r2, c2});
-                    cnt += 1;
                 }
             }
         }
@@ -121,27 +124,28 @@ public class Main {
         // for(int i = 0; i < N; i++){
         //     System.out.println(Arrays.toString(grid[i]));
         // }
-        
-        find_max_open_route(0, 0);
-        // System.out.println(max_open_route);
 
-        // for(int i = 0; i < N; i++){
-        //     System.out.println(Arrays.toString(visited[i]));
-        // }
+        int answer = 0;
+        if(grid[0][0] == 1){  
+            find_max_open_route(0, 0);
+            // System.out.println(max_open_route);
 
-        Collections.reverse(max_open_route);
-        int len = max_open_route.size();
+            Collections.reverse(max_open_route);
+            int len = max_open_route.size();
+            // System.out.println(len);
 
-        for(String rc : max_open_route){
-            int[] rowcol = string_to_location(rc);
-            // System.out.println(rowcol[0] + " " + rowcol[1]);
-            
-            boolean isClosed = find_close_route(len, rowcol[0], rowcol[1]);
-            if(isClosed){
-                System.out.println((len*2));
-                break;
+            for(String rc : max_open_route){
+                int[] rowcol = string_to_location(rc);
+                
+                boolean isClosed = find_close_route(len, rowcol[0], rowcol[1]);
+                if(isClosed){
+                    answer = len * 2;
+                    break;
+                }
+                len -= 1;
             }
-            len -= 1;
+            
         }
+        System.out.println(answer);
     }
 }
