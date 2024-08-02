@@ -9,26 +9,30 @@ import java.util.*;
 3. 최대 경로 역 순으로 조건에 만족하는 경우 찾기
     3.1 )가 최대길이만큼 찾아지면 됨
     3.2 안 찾아지면 )하나 빼고 찾기
-2. 시뮬레이션
-    ( ( ) )
-    ( ) ( ( 
-    ( ( ) ( 
-    ) ) ) )
 
-    1 1 0 0
-    1 0 1 1
-    1 1 0 1
-    0 0 0 0
 [시도2]
 1. 좌측 상단에 시작해야함 (0, 0) 
+(반례1) find_closed_route에서 종료 조건 위치 수정
+4
+((((
+()()
+((((
+()()
+
+(반례2) : 방향에 따라 꼬리가 달라서.. 직접 우선순위를 좌하우상으로 두는게 의미가 있으려나
+4
+((((
+((((
+))))
+))))
 */
 public class Main {
 
     private static int N;
     private static int[][] grid;    
     
-    private static int[] dy = {-1, 1, 0, 0};
-    private static int[] dx = {0, 0, -1, 1};
+    private static int[] dy = {0, 1, 0, -1};
+    private static int[] dx = {1, 0, -1, 0};
 
     private static boolean[][] visited = new boolean[N][N];
     private static LinkedList<String> open_route = new LinkedList<>();
@@ -79,14 +83,15 @@ public class Main {
         stack.add(new int[]{r, c});
 
         while(stack.size() > 0){
+
+            if(length == cnt){
+                return true;
+            }
+
             int[] rc = stack.pollLast();
             int r1 = rc[0];
             int c1 = rc[1];
             cnt += 1;
-
-            if((r1 != 0 && c1 != 0) && length == cnt){
-                return true;
-            }
 
             visited[r1][c1] = true;
 
