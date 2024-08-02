@@ -84,11 +84,10 @@ public class Main {
             int c1 = rc[1];
             cnt += 1;
 
-            if(length == cnt){
+            if((r1 != 0 && c1 != 0) && length == cnt){
                 return true;
             }
 
-            // System.out.println(r1 + " " + c1 + " " + cnt);
             visited[r1][c1] = true;
 
             for (int i = 0; i < 4; i++) {
@@ -136,8 +135,10 @@ public class Main {
 
             for(String rc : max_open_route){
                 int[] rowcol = string_to_location(rc);
-                
+                // System.out.println(Arrays.toString(rowcol));
+
                 boolean isClosed = find_close_route(len, rowcol[0], rowcol[1]);
+                // System.out.println(isClosed);
                 if(isClosed){
                     answer = len * 2;
                     break;
