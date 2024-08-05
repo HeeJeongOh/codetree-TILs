@@ -41,73 +41,42 @@ public class Main {
     private static int[] dy = {0, 1, 0, -1};
     private static int[] dx = {1, 0, -1, 0};
 
-    private static int max_open_length = 0;
-
+    private static int max_length = 0;
     private static boolean[][] visited = new boolean[N][N];
-    private static LinkedList<String> routes = new LinkedList<>();
 
     private static boolean boarderCheck( int y, int x){
           return (0 <= y && y < N && 0 <= x && x < N);
     }
-    private static String location_to_string(int y, int x){
-        return String.valueOf(y) + "," + String.valueOf(x);
-    }
-    private static int[] string_to_location(String yx){
-        String[] tmp = yx.split(",");
-        return new int[]{Integer.parseInt(tmp[0]), Integer.parseInt(tmp[1])};
-    }
 
-    private static void find_open_route(int r1, int c1, int length){
-        if(visited[r1][c1]){
+    private static void find_route(boolean status, int r1, int c1, int length, int opens){
+        if(length == 0){
+            if(max_length < opens){
+                max_length = opens;
+            }
             return;
         }
-
-        visited[r1][c1] = true;
 
         for (int i = 0; i < 4; i++) {
             int r2 = r1 + dy[i];
             int c2 = c1 + dx[i];
             
             if (boarderCheck(r2, c2) && !visited[r2][c2]) {
-                // System.out.println(r2 + "," + c2 + " " + length);
 
-                if(grid[r2][c2] == true){
-                    find_open_route(r2, c2, length+1);
+                if(grid[r2][c2] == true && status == true){
+                    visited[r2][c2] = true;
+                    find_route(true, r2, c2, length+1, length+1);
+                    visited[r2][c2] = false;
+
                 }
-                else{
-                    find_close_route(r2, c2, 0, length);
+                else if(grid[r2][c2] == false){
+                    visited[r2][c2] = true;
+                    find_route(false, r2, c2, length - 1, opens);
+                    visited[r2][c2] = false;
                 }
             }
         }
 
-        visited[r1][c1] = false;
     }
-
-    private static void find_close_route(int r1, int c1, int cnt, int length){
-
-        if(cnt == length && max_open_length < length){
-            max_open_length = length;
-            return;
-        }
-
-        if(visited[r1][c1]){
-            return;
-        }
-
-        visited[r1][c1] = true;
-
-        for (int i = 0; i < 4; i++) {
-            int r2 = r1 + dy[i];
-            int c2 = c1 + dx[i];
-            
-            if (boarderCheck(r2, c2) && !visited[r2][c2] && grid[r2][c2] == false){
-                    find_close_route(r2, c2, cnt+1, length);
-            }
-        }
-
-        visited[r1][c1] = false;
-    }
-
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -132,9 +101,9 @@ public class Main {
         // }
 
         if(grid[0][0] == true){
-            // find_open_route(int r1, int c1, int length)
-            find_open_route(0, 0, 1);            
+            // find_route(boolean status, int r1, int c1, int length, int opens)
+            find_route(true, 0, 0, 1, 1);            
         }
-        System.out.println(max_open_length * 2);
+        System.out.println(max_length * 2);
     }
 }
