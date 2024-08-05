@@ -69,6 +69,7 @@ public class Main {
 
                 }
                 else if(grid[r2][c2] == false){
+                    // System.out.println(r2 + " " + c2);
                     visited[r2][c2] = true;
                     find_route(false, r2, c2, length - 1, opens);
                     visited[r2][c2] = false;
@@ -101,6 +102,7 @@ public class Main {
         // }
 
         if(grid[0][0] == true){
+            visited[0][0] = true;
             // find_route(boolean status, int r1, int c1, int length, int opens)
             find_route(true, 0, 0, 1, 1);            
         }
