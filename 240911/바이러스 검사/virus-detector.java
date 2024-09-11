@@ -32,7 +32,7 @@ public class Main {
             int current_p = rests[i] - a;
 
             if(current_p <= 0){
-                break;
+                continue;
             }
 
             if(current_p % b == 0){
@@ -41,7 +41,8 @@ public class Main {
             else{
                 answer += (current_p / b) + 1;
             }
-        }
+        }            
         System.out.println(answer);
+       
     }
 }
